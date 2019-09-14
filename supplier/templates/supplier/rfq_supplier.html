@@ -1,0 +1,52 @@
+{% extends "supplier/base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="card" style="width: 100%;">
+<div class="card-header">
+  <h4>RFQ Supplier</h4>
+</div>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">
+    <div class="input-group">
+      <div class="col-md-12">
+        <a role="button" href="{% url 'new-rfq-supplier' %}" style="float:right;" class="btn btn-outline-secondary" name="button"><i class="fas fa-plus"></i> Add New</a>
+      </div>
+    </div>
+    <br>
+    <div class="table table-responsive">
+      <table class="table table-bordered sort" id="dataTable">
+          <thead>
+              <tr>
+                  <th width="60px">S NO.</th>
+                  <th >RFQ no</th>
+                  <th>Supplier</th>
+                  <th >Date</th>
+                  <th>From</th>
+                  <th width="70px">Attn</th>
+                  <th width="80px">Follow up</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for row in all_rfq reversed %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ row.rfq_no }}</td>
+                <td>{{ row.account_id.account_title }}</td>
+                <td>{{ row.date }}</td>
+                <td> user1 </td>
+                <td>{{ row.attn }}</td>
+                <td>{{ row.follow_up }}</td>
+                <td><a class="edit_list" href="{% url 'edit-rfq-supplier' pk=row.id %}"><i class="material-icons">&#xE254;</i></a><a class="delete-rfq-supplier" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </li>
+</ul>
+</div>
+
+
+{% endblock body %}

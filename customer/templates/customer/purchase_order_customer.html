@@ -1,0 +1,52 @@
+{% extends "supplier/base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="card" style="width: 100%;">
+<div class="card-header">
+  <h4>Purchase Order Customer</h4>
+</div>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">
+    <div class="input-group">
+      <div class="col-md-12">
+        <a role="button" href="{% url 'new-purchase-order-customer' %}" style="float:right;" class="btn btn-outline-secondary" name="button"><i class="fas fa-plus"></i> Add New</a>
+      </div>
+    </div>
+    <br>
+    <div class="table table-responsive content-loader">
+      <table class="table table-bordered sort" id="dataTable">
+          <thead>
+              <tr>
+                  <th width="70px" >S NO.</th>
+                  <th width="130px">PO No</th>
+                  <th >Customer</th>
+                  <th >Date</th>
+                  <th >From</th>
+                  <th >Currency Unit</th>
+                  <th >Exchange Rate</th>
+                  <th >Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for value in all_po reversed %}
+              <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td> {{ value.po_no }} </td>
+                  <td> {{value.account_id.account_title}} </td>
+                  <td> {{ value.date|date:"d-m-Y" }} </td>
+                  <td> User1  </td>
+                  <td> {{ value.currency }} </td>
+                  <td> {{ value.exchange_rate }} </td>
+                  <td><a class="edit_list" href="{% url 'edit-purchase-order-customer' pk=value.id %}" data-toggle=""><i class="material-icons">&#xE254;</i></a><a href="{% url 'print-po-customer' pk=value.id %}" target="_blank"><i class="fa fa-print" id="print_icon" aria-hidden="true"></i></a><a class="delete-all"  data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </li>
+</ul>
+</div>
+
+
+{% endblock body %}

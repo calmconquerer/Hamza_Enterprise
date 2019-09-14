@@ -1,0 +1,106 @@
+{% load mathfilters %}
+<html>
+<head>
+  <title>{{header.dc_no}}</title>
+<style>
+    @page {
+        size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+            -pdf-frame-content: header_content;
+            /* left: 30pt; width: 512pt; top: 20pt; height: 390pt; */
+        }
+        @frame content_frame {          /* Content Frame */
+            left: 30pt; width: 535pt; top: 10pt; height: 780pt;
+        }
+        @frame footer_frame {           /* Another static Frame */
+            -pdf-frame-content: footer_content;
+            left: 30pt; width: 535pt; top: 755pt; height: 120pt;
+        }
+    }
+    table > thead > tr > th {
+      text-align: center;
+      font-family: "Times New Roman", Times, serif;
+        }
+        table > thead > tr > td {
+          text-align: center;
+          font-family: "Times New Roman", Times, serif;
+        }
+        .no-bottom-border{
+            border-bottom:none;
+        }
+        .heading_row{
+          border:1px solid black;
+        }
+</style>
+</head>
+
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content">
+    </div>
+
+<!-- Content for Static Frame 'footer_frame' -->
+<div id="footer_content">
+  <div class="footer">
+     </div>
+  page <pdf:pagenumber> of <pdf:pagecount>
+  <p style="text-align:center;">Software Developed By TechFurq, 92 322 2832789, info@techfurq.com, www.techfurq.com</p>
+</div>
+
+    <!-- HTML Content -->
+
+  <br>
+  <br>
+  <div class="body">
+      <div>
+         <img style="width:150px; height:100px;" src="{{image.company_logo}}" align="right"/>
+         {% for value in company_info %}
+         <font size="25px" color="#0a012c" ><b>{{value.company_name}}</b></font></br>
+         <font size="11px" color="#0a012c" >33 Amina Mansion, Belasis Street,</font><br>
+         <font size="11px" color="#0a012c" >New Chali Karachi Pakistan</font><br>
+         <font size="11px" color="#0a012c" >{{ value.phone_no }}</font></br>
+         <font size="11px" color="#0a012c" >{{ value.mobile_no }}</font></br>
+         <font size="11px" color="#0a012c" >{{ value.email }}</font></br>
+         <font size="11px" color="#0a012c" >{{ value.website }}</font>
+         {% endfor %}
+     </div>
+     <br>
+     <br>
+     <font size="22px" color="#0a012c"><b>Sale Detail <small>(Item Wise)</small> </b></font>
+     <br>
+     <header>
+       <table style="border-bottom:1px solid black; border-spacing: 40px 10px;" cellpadding="3" bgcolor="#f7f7f7">
+       </table>
+     </header>
+     <br>
+     <font size="5"><b>From:</b></font> <font size="4">{{from_date}}</font>&nbsp;&nbsp;&nbsp;<font size="5">To:</font> <font size="4">{{to_date}}</font>
+     <br>
+    <table cellpadding="3" id="item_table" repeat="1">
+      <thead>
+        <tr class="heading_row">
+          <th align="center" style="width: 150px;"><font size="14px">Item Code</font></th>
+          <th style="width:200px;"><font size="14px">Item Name</font></th>
+          <th style="width:350px;"><font size="14px">Description</font></th>
+          <th style="width:200px;"><font size="14px">Total Sale in PKR</font></th>
+        </tr>
+      </thead>
+      {% for value in row %}
+      <tbody>
+        <tr>
+          <td style="text-align:center; border-bottom: 1px solid black">{{ value.0 }}</td>
+          <td style="text-align:center; border-bottom: 1px solid black">{{ value.1 }}</td>
+          <td style="text-align:center; border-bottom: 1px solid black">{{ value.2 }}</td>
+          <td style="text-align:center; border-bottom: 1px solid black">{{ value.3|floatformat:2 }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+      <tr>
+        <td colspan="3" style="text-align:center; border-bottom: 1px solid black"><font size="4"><b>Total</b></font></td>
+        <td style="text-align:center; border-bottom: 1px solid black"><font size="4"><b>{{total|floatformat:2}}</b></font></td>
+      </tr>
+  </table>
+  <br>
+</div>
+
+</body>
+</html>

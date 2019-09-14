@@ -1,0 +1,47 @@
+{% extends "supplier/base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="card" style="width: 100%;">
+<div class="card-header">
+  <h4>MRN Customer</h4>
+</div>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">
+    <br>
+    <div class="table table-responsive content-loader">
+      <table class="table table-bordered sort" id="dataTable">
+          <thead>
+              <tr>
+                  <th width="70px" >S NO.</th>
+                  <th width="140px">DC no</th>
+                  <th width="140px">Customer</th>
+                  <th width="140px">Date</th>
+                  <th width="70px">Status</th>
+                  <th width="70px">Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for value in all_dc%}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ value.1 }}</td>
+                <td>{{ value.2 }}</td>
+                <td>{{ value.3|date:"d-m-Y" }}</td>
+                {% if value.5 < value.4 %}
+                <td style="background-color:orange;"><b>Pending</b></td>
+                {% else %}
+                <td style="background-color:#00ff00;"><b>Accepted</b></td>
+                {% endif %}
+                <td><a class="edit_list" href="{% url 'edit-mrn-customer' pk=value.0 %}" data-toggle=""><i class="material-icons">&#xE254;</i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </li>
+</ul>
+</div>
+
+
+{% endblock body %}
